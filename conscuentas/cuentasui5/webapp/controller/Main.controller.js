@@ -15,6 +15,7 @@ sap.ui.define([
         const currModel = new JSONModel();
 
         function onInit() {
+
             paramModel.loadData("./localService/mockdata/params.json", "false");
             this.getView().setModel(paramModel, "paramModel");
 
@@ -28,34 +29,52 @@ sap.ui.define([
             this.getView().setModel(currModel, "currModel");
         }
 
+        function onBeforeRendering() {
+
+            this._wizard = this.getView().byId("wizard");
+            this._FirstStep = this._wizard.getSteps()[0];
+            this._SecondStep = this._wizard.getSteps()[1];
+            this._ThirdsStep = this._wizard.getSteps()[2];
+
+            //Reset Wizard
+            this._wizard.discardProgess(this._FirstStep);
+            this._wizard.goToStep(this._FirstStep);
+            this._FirstStep.setValidated(false);
+
+
+        }
+
         function onValidateStep1(oEvent) {
-            
+
             const name = this.getView().byId("inp1").getValue();
 
             const description = this.getView().byId("txa1").getValue();
 
             if (name != '' && name != undefined && description != '' && description != undefined) {
-                // actualizar paramModel
+
                 paramModel.setProperty("/employeeName", name);
                 paramModel.setProperty("/description", description);
 
-                const steps = this.getView().byId("CreateProductWizard").getSteps();
-                steps[0].setValidated(true);
+                this._FirstStep.setValidated(true);
+                this._wizard.goToStep(this._SecondStep);
 
             }
 
             else {
 
-                const steps = this.getView().byId("CreateProductWizard").getSteps();
-                steps[0].setValidated(false);
+                this._FirstStep.setValidated(false);
 
             }
         }
 
         function onValidateChart() {
             // traer el valor y actualizar modelo de parametros
+            const chart = chartsModel.getProperty("/selectedChart");
+            paramModel.setProperty("/chart", chart);
+
 
             // validar si todos los datos están llenos para ir al paso 3
+            _validateStep2(this);
 
         }
 
@@ -63,33 +82,79 @@ sap.ui.define([
 
         }
 
-        function handleSelectionFinish() {
+        function handleSelectionGroups(oEvent) {
             // traer el valor y actualizar modelo de parametros
+            let groups = [];
+            groupsModel.setProperty("/selectedGroups", [])
+            var selectecItems = oEvent.getParameter("selectedItems");
+            for (var i in selectecItems) {
+                groups.push(selectecItems[i].getKey);
+
+            }
+            groupsModel.setProperty("/selectedGroups", groups);
+            paramModel.setProperty("/groups", groups);
 
             // validar si todos los datos están llenos para ir al paso 3
+            _validateStep2(this);
 
         }
 
         function onValidateCurr() {
             // traer el valor y actualizar modelo de parametros
+            const currency = currModel.getProperty("/monedaSeleccionada");
+            paramModel.setProperty("/currency", currency);
+
 
             // validar si todos los datos están llenos para ir al paso 3
+            _validateStep2(this);
 
         }
 
-        function handleChangeDate() {
+        function handleChangeDate(oEvent) {
             // traer el valor y actualizar modelo de parametros
+            const sValue = oEvent.getParameter("value");
+            const bValid = oEvent.getParameter("valid");
+            if (bValid) {
+                paramModel.setProperty("/date", sValue)
+
+            }
+            else {
+                paramModel.setProperty("/date", "")
+            }
 
             // validar si todos los datos están llenos para ir al paso 3
+            _validateStep2(this);
+
+        }
+
+        function _validateStep2(that) {
+
+            const params = paramModel.getData();
+
+            if (params.chart !== "" && params.chart !== undefined
+                && params.groups !== "" && params.groups.length > 0
+                && params.currency !== "" && params.currency !== undefined
+                && params.date !== "" && params.date !== undefined) {
+
+                that._SecondStep.setValidated(true);
+                that._wizard.goToStep(this._ThirdsStep);
+
+            }
+            else {
+
+                that._SecondStep.setValidated(false);
+
+            }
 
         }
 
         const Main = Controller.extend("mcc.cuentasui5.controller.Main", {});
+        Main.prototype.onBeforeRendering = onBeforeRendering;
         Main.prototype.onInit = onInit;
         Main.prototype.onValidateStep1 = onValidateStep1;
         Main.prototype.onValidateChart = onValidateChart;
         Main.prototype.handleSelectionChange = handleSelectionChange;
-        Main.prototype.handleSelectionFinish = handleSelectionFinish;
+        Main.prototype.handleSelectionFinish = handleSelectionGroups;
         Main.prototype.onValidateCurr = onValidateCurr;
         Main.prototype.handleChangeDate = handleChangeDate;
 
