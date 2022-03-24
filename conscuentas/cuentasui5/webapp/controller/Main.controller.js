@@ -1,18 +1,21 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      * @param {typeof sap.ui.model.json.JSONModel} JSONModel
+     * @param {typeof sap.ui.core.Fragment} Fragment
      */
-    function (Controller, JSONModel) {
+    function (Controller, JSONModel, Fragment) {
         "use strict";
 
         const paramModel = new JSONModel();
         const chartsModel = new JSONModel();
         const groupsModel = new JSONModel();
         const currModel = new JSONModel();
+        const fieldModel = new JSONModel();
 
         function onInit() {
 
@@ -27,6 +30,9 @@ sap.ui.define([
 
             currModel.loadData("./localService/mockdata/currency.json", "false");
             this.getView().setModel(currModel, "currModel");
+
+            fieldModel.loadData("./localService/mockdata/fields.json", "false");
+            this.getView().setModel(fieldModel, "fieldModel");
         }
 
         function onBeforeRendering() {
@@ -85,10 +91,10 @@ sap.ui.define([
         function handleSelectionGroups(oEvent) {
             // traer el valor y actualizar modelo de parametros
             let groups = [];
-            groupsModel.setProperty("/selectedGroups", [])
-            var selectecItems = oEvent.getParameter("selectedItems");
-            for (var i in selectecItems) {
-                groups.push(selectecItems[i].getKey);
+            groupsModel.setProperty("/selectedGroups", []);
+            var selectedItems = oEvent.getParameter("selectedItems");
+            for (var i in selectedItems) {
+                groups.push(selectedItems[i].getKey());
 
             }
             groupsModel.setProperty("/selectedGroups", groups);
@@ -148,15 +154,59 @@ sap.ui.define([
 
         }
 
+        function onValidateStep3(oEvent) {
+
+            const fields = fieldModel.getProperty("/fields");
+            let selectedFields = [];
+            const indexs = this.getView().byId("tb1").getSelectedIndices();
+            fieldModel.setProperty("/selectedFields", []);
+
+            if (indexs) {
+                for (let i in indexs) {
+                    selectedFields.push(fields[i].id);
+                }
+                fieldModel.setProperty("/selectedFields", selectedFields);
+
+            }
+
+        }
+
+        function onShowDescription(oEvent) {
+
+            const oView = this.getView();
+            //Verificar si el Dialog ya está instanciado
+            if (!this.byId("descriptionDialog")) {
+
+                Fragment.load({
+                    id: oView.getId(),
+                    name: "mcc.cuentasui5.fragment.descriptionReport",
+                    controller: this
+                }).then(function (oDialog) {
+                    oView.addDependt(oDialog);
+                    oDialog.open();
+                });
+            }
+            else{
+                this.byId("descriptionDialog").open();
+            }
+        }
+
+        function onCloseDescription(oEvent) {
+            this.byId("descriptionDialog").close();            
+        }
+
         const Main = Controller.extend("mcc.cuentasui5.controller.Main", {});
         Main.prototype.onBeforeRendering = onBeforeRendering;
         Main.prototype.onInit = onInit;
         Main.prototype.onValidateStep1 = onValidateStep1;
         Main.prototype.onValidateChart = onValidateChart;
         Main.prototype.handleSelectionChange = handleSelectionChange;
-        Main.prototype.handleSelectionFinish = handleSelectionGroups;
+        Main.prototype.handleSelectionGroups = handleSelectionGroups;
         Main.prototype.onValidateCurr = onValidateCurr;
         Main.prototype.handleChangeDate = handleChangeDate;
+        Main.prototype.onValidateStep3 = onValidateStep3;
+        Main.prototype.onShowDescription = onShowDescription;
+        Main.prototype.onCloseDescription = onCloseDescription;
 
         return Main
 
