@@ -1,3 +1,4 @@
+// @ts-nocheck
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
@@ -43,7 +44,7 @@ sap.ui.define([
             this._ThirdsStep = this._wizard.getSteps()[2];
 
             //Reset Wizard
-            this._wizard.discardProgess(this._FirstStep);
+            this._wizard.discardProgress(this._FirstStep);
             this._wizard.goToStep(this._FirstStep);
             this._FirstStep.setValidated(false);
 
@@ -73,7 +74,7 @@ sap.ui.define([
             }
         }
 
-        function onValidateChart() {
+        function onValidateChart(oEvent) {
             // traer el valor y actualizar modelo de parametros
             const chart = chartsModel.getProperty("/selectedChart");
             paramModel.setProperty("/chart", chart);
@@ -121,11 +122,11 @@ sap.ui.define([
             const sValue = oEvent.getParameter("value");
             const bValid = oEvent.getParameter("valid");
             if (bValid) {
-                paramModel.setProperty("/date", sValue)
+                paramModel.setProperty("/date", sValue);
 
             }
             else {
-                paramModel.setProperty("/date", "")
+                paramModel.setProperty("/date", "");
             }
 
             // validar si todos los datos están llenos para ir al paso 3
@@ -182,7 +183,7 @@ sap.ui.define([
                     name: "mcc.cuentasui5.fragment.descriptionReport",
                     controller: this
                 }).then(function (oDialog) {
-                    oView.addDependt(oDialog);
+                    oView.addDependent(oDialog);
                     oDialog.open();
                 });
             }

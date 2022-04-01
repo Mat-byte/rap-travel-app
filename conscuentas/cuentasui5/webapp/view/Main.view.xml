@@ -1,137 +1,86 @@
-<mvc:View 
-    xmlns:core="sap.ui.core"
-    controllerName="mcc.cuentasui5.controller.Main"
-    xmlns:mvc="sap.ui.core.mvc" 
+<mvc:View xmlns:core="sap.ui.core" controllerName="mcc.cuentasui5.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
     xmlns:f="sap.ui.layout.form"
-    xmlns:table="sap.ui.table"
-    displayBlock="true"
+    xmlns:table="sap.ui.table" displayBlock="true"
     xmlns="sap.m">
     <Shell id="shell">
         <App id="app">
             <pages>
-                <Page id="page"
-                    title="{i18n>title}">
+                <Page id="page" title="{i18n>title}">
                     <content>
-                        <Wizard id="wizard"
-                            class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
-                            complete="wizardCompletedHandler">
-                            <WizardStep id="step1"
-                                title="Descripción de la consulta"
-                                validated="false">
-                                <MessageStrip id="mstrip1"
-                                    class="sapUiSmallMarginBottom"
-                                    text="Digite los datos básicos de la consulta"
-                                    showIcon="true"/>
+                        <Wizard id="wizard" class="sapUiResponsivePadding--header sapUiResponsivePadding--content" complete="wizardCompletedHandler">
+                            <WizardStep id="step1" title="Descripción de la consulta" validated="false">
+                                <MessageStrip id="mstrip1" class="sapUiSmallMarginBottom" text="Digite los datos básicos de la consulta" showIcon="true"/>
 
-                                <f:SimpleForm id="sform1"
-                                    editable="true">
-                                    <Label id="lab1"
-                                        text="{i18n>employeeName}"/>
-                                    <Input id="inp1"
-                                        value="{paramModel>/employeeName}"
-                                        width="300px"
-                                        placeholder="{i18n>employeeNamePH}"
-                                        liveChange="onValidateStep1"/>
-                                    <Label id='lab2'
-                                        text="{i18n>description}"/>
-                                    <TextArea id="txa1"
-                                        value="{paramModel>/description}"
-                                        valueLiveUpdate="true"
-                                        liveChange="onValidateStep1"
-                                        width="80%"
-                                        maxLength="150"
-                                        showExceededText="true"/>
+                                <!-- <FlexBox direction="Row" height="200px" alignItems="Center" justifyContent="SpaceBetween">
+                                    <items>
+                                        <HBox >
+                                            <Button text="1" type="Emphasized" class="sapUiSmallMarginEnd" />
+                                            <Button text="2" type="Reject" class="sapUiSmallMarginEnd" />
+                                            <Button text="3" type="Accept" />
+                                        </HBox>
+                                        <HBox >
+                                            <Button text="4" type="Emphasized" class="sapUiSmallMarginEnd" />
+                                            <Button text="5" type="Reject" class="sapUiSmallMarginEnd" />
+                                            <Button text="6" type="Accept" />
+                                        </HBox>
+                                    </items>
+                                </FlexBox> -->
+
+                                <f:SimpleForm id="sform1" editable="true">
+                                    <Label id="lab1" text="{i18n>employeeName}"/>
+                                    <Input id="inp1" value="{paramModel>/employeeName}" width="300px" placeholder="{i18n>employeeNamePH}" liveChange="onValidateStep1" required="true"/>
+                                    <Label id='lab2' text="{i18n>description}"/>
+                                    <TextArea id="txa1" value="{paramModel>/description}" valueLiveUpdate="true" liveChange="onValidateStep1" width="80%" maxLength="150" showExceededText="true"/>
                                 </f:SimpleForm>
                             </WizardStep>
-                            <WizardStep id="step2"
-                                title="parámetros de selección"
-                                validated="true">
-                                <MessageStrip id="mstrip2"
-                                    class="sapUiSmallMarginBottom"
-                                    text="Digite los parámetros"
-                                    showIcon="true"/>
-                                <!--<core:Fragment fragmentName="mcc.cuentasui5.fragment.descriptionReport"
-                                               type="XML" /> -->
-                                <f:SimpleForm id="sf2"
-                                    editable="true">
-                                    <Label id="lb3"
-                                        text="{i18n>charts}"/>
-                                    <Select id="sel1"
-                                        selectedKey="{chartsModel>/selectedChart}"
-                                        items="{chartsModel>/charts}"
-                                        forceSelection="false"
-                                        width="200px"
-                                        change="onValidateChart">
+                            <WizardStep id="step2" title="parámetros de selección" validated="false">
+                                <MessageStrip id="mstrip2" class="sapUiSmallMarginBottom" text="Digite los parámetros" showIcon="true"/>
+                                <!--<core:Fragment fragmentName="mcc.cuentasui5.fragment.descriptionReport" type="XML" /> -->
+                                <f:SimpleForm id="sf2" editable="true">
+                                    <Label id="lb3" text="{i18n>charts}"/>
+                                    <Select id="sel1" selectedKey="{chartsModel>/selectedChart}" items="{chartsModel>/charts}" forceSelection="false" width="200px" change="onValidateChart">
                                         <items>
-                                            <core:Item id="it1"
-                                                key="{chartsModel>id}"
-                                                text="{chartsModel>name}"/>
+                                            <core:Item id="it1" key="{chartsModel>id}" text="{chartsModel>name}"/>
                                         </items>
                                     </Select>
                                     <Label text="Grupos"/>
-                                    <MultiComboBox selectionChange="handleSelectionChange"
-                                        selectionFinish="handleSelectionGroups"
-                                        width="350px"
-                                        items="{groupsModel>/groups}">
-                                        <core:Item key="{groupsModel>id}"
-                                            text="{groupsModel>description}"/>
+                                    <MultiComboBox selectionChange="handleSelectionChange" selectionFinish="handleSelectionGroups" width="350px" items="{groupsModel>/groups}">
+                                        <core:Item key="{groupsModel>id}" text="{groupsModel>description}"/>
                                     </MultiComboBox>
                                     <Label text="Moneda"/>
-                                    <Select id="sel2"
-                                        selectedKey="{currModel>/monedaSeleccionada}"
-                                        items="{currModel>/monedas}"
-                                        forceSelection="false"
-                                        width="200px"
-                                        change="onValidateCurr">
+                                    <Select id="sel2" selectedKey="{currModel>/monedaSeleccionada}" items="{currModel>/monedas}" forceSelection="false" width="200px" change="onValidateCurr">
                                         <items>
-                                            <core:Item id="it2"
-                                                key="{currModel>id}"
-                                                text="{currModel>nombre}"/>
+                                            <core:Item id="it2" key="{currModel>id}" text="{currModel>nombre}"/>
                                         </items>
                                     </Select>
                                     <Label text="Fecha"/>
-                                    <DatePicker id="dp1"
-                                        placeholder="Fecha de consulta"
-                                        width="250px"
-                                        change="handleChangeDate"/>
+                                    <DatePicker id="dp1" placeholder="Fecha de consulta" width="250px" change="handleChangeDate"/>
                                 </f:SimpleForm>
                             </WizardStep>
-                            <WizardStep id="step3"
-                                title="Selección de campos"
-                                validated="true">
-                                <MessageStrip id="mstrip3"
-                                    class="sapUiSmallMarginBottom"
-                                    text="Digite los datos básicos de la consulta"
-                                    showIcon="true"/>
-                                
-                                <FlexBox direction="Row"
-                                         justifyContent="SpaceAround"
-                                         alignItems="Center" >
-                                    <items>
-                                        <HBox >
-                                            <table:Table id="tb1" selectionMode="MultiToggle"
-                                                         rows="{fieldModel>/fields}"
-                                                         visibleRowCount="5"
-                                                         rowSelectionChange="onvValidateStep3">
-                                                    <table:columns>
-                                                        <table:Column>
-                                                            <Label text="Campo"/>
-                                                            <table:template>
-                                                                <Text text="{fieldModel>name}" wrapping="false"></Text>
-                                                            </table:template>
-                                                        </table:Column>
-                                                    </table:columns>
-                                            </table:Table>                                       
-                                        </HBox>
-                                            <FlexBox justifyContent="Center"
-                                                     alignContent="Center">
-                                                <items>
-                                                    <Button text="Ver Descripción"/>
-                                                </items>
+                            <WizardStep id="step3" title="Selección de campos" validated="true">
+                                <MessageStrip id="mstrip3" class="sapUiSmallMarginBottom" text="Digite los datos básicos de la consulta" showIcon="true"/>
 
-                                            </FlexBox>
+                                <FlexBox direction="Row" justifyContent="SpaceAround" alignItems="Center">
+                                    <items>
+                                        <HBox width="30%">
+                                            <table:Table id="tb1" selectionMode="MultiToggle" rows="{fieldModel>/fields}" visibleRowCount="5" rowSelectionChange="onValidateStep3">
+                                                <table:columns>
+                                                    <table:Column >
+                                                        <Label text="Campo"/>
+                                                        <table:template>
+                                                            <Text text="{fieldModel>name}" wrapping="false"/>
+                                                        </table:template>
+                                                    </table:Column>
+                                                </table:columns>
+                                            </table:Table>
+                                        </HBox>
                                         <HBox >
-                                        
+                                            <FlexBox justifyContent="Center" alignContent="Center">
+                                                <items>
+                                                    <Button text="Ver Descripción" press="onShowDescription"/>
+                                                </items>
+                                            </FlexBox>
                                         </HBox>
                                     </items>
                                 </FlexBox>
