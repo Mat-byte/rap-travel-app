@@ -20,6 +20,8 @@ sap.ui.define([
 
         function onInit() {
 
+            this._oNavContainer = this.byId("Nav1");
+
             paramModel.loadData("./localService/mockdata/params.json", "false");
             this.getView().setModel(paramModel, "paramModel");
 
@@ -95,7 +97,9 @@ sap.ui.define([
             groupsModel.setProperty("/selectedGroups", []);
             var selectedItems = oEvent.getParameter("selectedItems");
             for (var i in selectedItems) {
-                groups.push(selectedItems[i].getKey());
+                const grpStr = '{"id":"'+selectItems[i].getKey() +'","description":"'+selectItems[i].getText()+'"}';
+                groups.push(JSON.parse(grpStr));
+                //groups.push(selectedItems[i].getKey());
 
             }
             groupsModel.setProperty("/selectedGroups", groups);
@@ -196,6 +200,17 @@ sap.ui.define([
             this.byId("descriptionDialog").close();            
         }
 
+        function wizardCompletedHandler(oEvent) {
+            this._oNavContainer.to(this.byId("page2"));
+        }
+        
+        function handleWizardResume(oEvent) {
+            
+        }
+
+        function handleWizardCancel(oEvent) {
+            
+        }
         const Main = Controller.extend("mcc.cuentasui5.controller.Main", {});
         Main.prototype.onBeforeRendering = onBeforeRendering;
         Main.prototype.onInit = onInit;
@@ -208,6 +223,9 @@ sap.ui.define([
         Main.prototype.onValidateStep3 = onValidateStep3;
         Main.prototype.onShowDescription = onShowDescription;
         Main.prototype.onCloseDescription = onCloseDescription;
+        Main.prototype.wizardCompletedHandler = wizardCompletedHandler;
+        Main.prototype.handleWizardResume = handleWizardResume;
+        Main.prototype.handleWizardCancel = handleWizardCancel;
 
         return Main
 
