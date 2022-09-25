@@ -8,6 +8,30 @@
       "options": {
         "cwd": "${workspaceFolder}/conscuentas/conscuentas-approuter"
       }
+    },
+    {
+      "label": "Build mcc.project2",
+      "type": "shell",
+      "command": "if [ ! -f ${workspaceFolder}/mcc.project2/node_modules/@sap/html5-repo-mock/index.js ] || [ ! -f ${workspaceFolder}/mcc.project2/node_modules/@sap/approuter/approuter.js ]; then npm i @sap/approuter && npm i @sap/html5-repo-mock; fi",
+      "options": {
+        "cwd": "${workspaceFolder}/mcc.project2"
+      }
+    },
+    {
+      "label": "Build project3",
+      "type": "shell",
+      "command": "if [ ! -f ${workspaceFolder}/project3/project3-approuter/node_modules/@sap/html5-repo-mock/index.js ] || [ ! -f ${workspaceFolder}/project3/project3-approuter/node_modules/@sap/approuter/approuter.js ]; then npm i @sap/approuter && npm i @sap/html5-repo-mock; fi",
+      "options": {
+        "cwd": "${workspaceFolder}/project3/project3-approuter"
+      }
+    },
+    {
+      "label": "Build project1",
+      "type": "shell",
+      "command": "if [ ! -f ${workspaceFolder}/project1/project1-approuter/node_modules/@sap/html5-repo-mock/index.js ] || [ ! -f ${workspaceFolder}/project1/project1-approuter/node_modules/@sap/approuter/approuter.js ]; then npm i @sap/approuter && npm i @sap/html5-repo-mock; fi",
+      "options": {
+        "cwd": "${workspaceFolder}/project1/project1-approuter"
+      }
     }
   ]
 }

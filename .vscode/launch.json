@@ -1,25 +1,425 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Run conscuentas-cuentasui5",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/conscuentas/conscuentas-approuter/node_modules/@sap/html5-repo-mock/index.js",
-      "args": [
-        "--standalone",
-        "/mcccuentasui5/index.html",
-        "--ui5",
-        "{\"version\":\".\"}"
-      ],
-      "cwd": "${workspaceFolder}/conscuentas/cuentasui5",
-      "env": {
-        "PORT": "6004",
-        "MOCK_LOOKUP_DIRS": "[\"webapp\"]",
-        "run.config": "{\"handlerId\":\"ui5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/conscuentas/cuentasui5\"}"
-      },
-      "envFile": "${workspaceFolder}/conscuentas/cuentasui5/.env1",
-      "preLaunchTask": "Build conscuentas"
-    }
-  ]
+    "configurations": [
+        {
+            "name": "Run conscuentas-cuentasui5",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/conscuentas/conscuentas-approuter/node_modules/@sap/html5-repo-mock/index.js",
+            "args": [
+                "--standalone",
+                "/mcccuentasui5/index.html",
+                "--ui5",
+                "{\"version\":\".\"}"
+            ],
+            "cwd": "${workspaceFolder}/conscuentas/cuentasui5",
+            "env": {
+                "PORT": "6004",
+                "MOCK_LOOKUP_DIRS": "[\"webapp\"]",
+                "run.config": "{\"handlerId\":\"ui5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/conscuentas/cuentasui5\"}"
+            },
+            "envFile": "${workspaceFolder}/conscuentas/cuentasui5/.env1",
+            "preLaunchTask": "Build conscuentas"
+        },
+        {
+            "name": "Start projectoneui5",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npx",
+            "cwd": "${workspaceFolder}/projectoneui5",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flpSandbox.html#mccprojectoneui5-display"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/projectoneui5\"}"
+            }
+        },
+        {
+            "name": "Start projectoneui5 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/projectoneui5",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flpSandbox.html#mccprojectoneui5-display"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/projectoneui5\"}"
+            }
+        },
+        {
+            "name": "Run mcc.project2-uimodule",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/mcc.project2/node_modules/@sap/html5-repo-mock/index.js",
+            "args": [
+                "--standalone",
+                "/mccproject2/index.html",
+                "--ui5",
+                "{\"version\":\".\"}"
+            ],
+            "cwd": "${workspaceFolder}/mcc.project2/uimodule",
+            "env": {
+                "PORT": "6004",
+                "MOCK_LOOKUP_DIRS": "[\"webapp\"]",
+                "run.config": "{\"handlerId\":\"ui5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/mcc.project2/uimodule\"}"
+            },
+            "envFile": "${workspaceFolder}/mcc.project2/uimodule/.env1",
+            "preLaunchTask": "Build mcc.project2"
+        },
+        {
+            "name": "Start project3",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npx",
+            "cwd": "${workspaceFolder}/project3",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flpSandbox.html#mccproject3-display"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/project3\"}"
+            }
+        },
+        {
+            "name": "Start project3 Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/project3",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flpSandbox.html#mccproject3-display"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/project3\"}"
+            }
+        },
+        {
+            "name": "Start project3 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/project3",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flpSandbox.html#mccproject3-display"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/project3\"}"
+            }
+        },
+        {
+            "name": "Start project3",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npx",
+            "cwd": "${workspaceFolder}/project3",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flpSandbox.html#mccproject3-display"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/project3\"}"
+            }
+        },
+        {
+            "name": "Start project3 Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/project3",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flpSandbox.html#mccproject3-display"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/project3\"}"
+            }
+        },
+        {
+            "name": "Run project3-project3ui5",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/project3/project3-approuter/node_modules/@sap/html5-repo-mock/index.js",
+            "args": [
+                "--standalone",
+                "/mccproject3ui5/index.html",
+                "--ui5",
+                "{\"version\":\".\"}"
+            ],
+            "cwd": "${workspaceFolder}/project3/project3ui5",
+            "env": {
+                "PORT": "6004",
+                "MOCK_LOOKUP_DIRS": "[\"webapp\"]",
+                "run.config": "{\"handlerId\":\"ui5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/project3/project3ui5\"}"
+            },
+            "envFile": "${workspaceFolder}/project3/project3ui5/.env1",
+            "preLaunchTask": "Build project3"
+        },
+        {
+            "name": "Start ztravel_app_matbyte",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npx",
+            "cwd": "${workspaceFolder}/ztravel_app_matbyte",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flpSandbox.html#mccztravelappmatbyte-tile"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/ztravel_app_matbyte\"}"
+            }
+        },
+        {
+            "name": "Start ztravel_app_matbyte Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/ztravel_app_matbyte",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flpSandbox.html#mccztravelappmatbyte-tile"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/ztravel_app_matbyte\"}"
+            }
+        },
+        {
+            "name": "Start ztravel_app_matbyte Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/ztravel_app_matbyte",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flpSandbox.html#mccztravelappmatbyte-tile"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/ztravel_app_matbyte\"}"
+            }
+        },
+        {
+            "name": "Start travellist",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npx",
+            "cwd": "${workspaceFolder}/travellist",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--open",
+                "test/flpSandbox.html#sapfedemotravellist-tile"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "DEBUG": "--inspect",
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/travellist\"}"
+            }
+        },
+        {
+            "name": "Start travellist Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/travellist",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flpSandbox.html#sapfedemotravellist-tile"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/travellist\"}"
+            }
+        },
+        {
+            "name": "Start travellist Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/travellist",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flpSandbox.html#sapfedemotravellist-tile"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/travellist\"}"
+            }
+        }
+    ],
+    "compounds": [],
+    "version": "0.2.0"
 }
